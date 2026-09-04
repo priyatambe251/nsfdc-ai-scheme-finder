@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSFDC AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" onclick="showPage('home')" role="button" tabindex="0">
+        <div class="brand-mark">AI</div>
+        <div>
+          <strong>NSFDC AI Assistant</strong>
+          <span>Find the right scheme for you</span>
+        </div>
+      </div>
+      <div class="language">🌐 English ▾</div>
+    </header>
+
+    <main id="app">
+      <!-- HOME -->
+      <section id="home-page" class="page active">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">SMART SCHEME DISCOVERY</span>
+            <h1>Find the right NSFDC scheme with AI.</h1>
+            <p>Answer a few simple questions. The existing NSFDC AI model will analyse your profile and show the most suitable scheme.</p>
+            <button class="primary-btn large" onclick="startRecommendation()">Let's Start <span>→</span></button>
+          </div>
+          <div class="hero-art">
+            <div class="orbit"></div>
+            <div class="assistant-avatar">🤖</div>
+            <div class="floating-bubble">Hello! 👋<br><small>I can help you find a suitable scheme.</small></div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <span class="eyebrow">WHAT YOU CAN DO</span>
+            <h2>One assistant, multiple needs</h2>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <button class="feature-card" onclick="startRecommendation('Business')"><span>💼</span><b>Start a Business</b><small>Explore finance for income-generating activities.</small></button>
+          <button class="feature-card" onclick="startRecommendation('Education')"><span>🎓</span><b>Education</b><small>Check education-loan suitability.</small></button>
+          <button class="feature-card" onclick="startRecommendation('Business')"><span>🐄</span><b>Dairy / Livestock</b><small>Tell us about your proposed activity.</small></button>
+          <button class="feature-card" onclick="startRecommendation('Business')"><span>🏠</span><b>Existing Business Support</b><small>Share project and loan requirements.</small></button>
+        </div>
+      </section>
+
+      <!-- QUESTIONNAIRE -->
+      <section id="questionnaire-page" class="page">
+        <div class="question-wrap">
+          <div class="question-head">
+            <button class="icon-btn" onclick="previousQuestion()" aria-label="Previous">←</button>
+            <div class="progress-info">
+              <span id="question-count">Question 1</span>
+              <div class="progress"><div id="progress-bar"></div></div>
+            </div>
+            <button class="icon-btn" onclick="showPage('home')" aria-label="Close">×</button>
+          </div>
+
+          <div class="chat-card">
+            <div class="assistant-line"><div class="mini-avatar">AI</div><div><b>AI Assistant</b><span>Let's understand your requirement.</span></div></div>
+            <div id="question-content"></div>
+          </div>
+
+          <div class="privacy-note">🔒 Your answers are used only to prepare the recommendation request for this prototype.</div>
+        </div>
+      </section>
+
+      <!-- RECOMMENDATION -->
+      <section id="recommendation-page" class="page">
+        <div class="content-narrow">
+          <div class="result-heading">
+            <button class="icon-btn" onclick="showPage('questionnaire')">←</button>
+            <div>
+              <span class="eyebrow">AI RESULT</span>
+              <h1>Recommended Scheme</h1>
+            </div>
+          </div>
+          <div id="recommendation-content"></div>
+        </div>
+      </section>
+
+      <!-- DETAILS -->
+      <section id="details-page" class="page">
+        <div class="content-narrow">
+          <div class="result-heading"><button class="icon-btn" onclick="showPage('recommendation')">←</button><div><span class="eyebrow">SCHEME INFORMATION</span><h1>Scheme Details</h1></div></div>
+          <div id="details-content"></div>
+        </div>
+      </section>
+
+      <!-- EMI -->
+      <section id="emi-page" class="page">
+        <div class="content-narrow">
+          <div class="result-heading"><button class="icon-btn" onclick="goBackFromUtility()">←</button><div><span class="eyebrow">CALCULATOR</span><h1>EMI Calculator</h1></div></div>
+          <div class="calculator-card">
+            <label>Loan Amount (₹)<input id="emi-amount" type="number" min="0" step="1000"></label>
+            <label>Interest Rate (% p.a.)<input id="emi-rate" type="number" min="0" step="0.1"></label>
+            <label>Loan Tenure (years)<input id="emi-years" type="number" min="1" max="20" step="1" value="3"></label>
+            <button class="primary-btn" onclick="calculateEMI()">Calculate EMI</button>
+          </div>
+          <div id="emi-result" class="metric-grid"></div>
+          <p class="disclaimer">* Calculation is approximate. Actual values, sanction amount and terms may vary by scheme and channel partner.</p>
+        </div>
+      </section>
+
+      <!-- PARTNERS -->
+      <section id="partners-page" class="page">
+        <div class="content-narrow">
+          <div class="result-heading"><button class="icon-btn" onclick="goBackFromUtility()">←</button><div><span class="eyebrow">APPLICATION SUPPORT</span><h1>Channel Partners</h1></div></div>
+          <div id="partners-content"></div>
+        </div>
+      </section>
+
+      <!-- DOCUMENTS -->
+      <section id="documents-page" class="page">
+        <div class="content-narrow">
+          <div class="result-heading"><button class="icon-btn" onclick="goBackFromUtility()">←</button><div><span class="eyebrow">NEXT STEPS</span><h1>Documents & Application</h1></div></div>
+          <div id="documents-content"></div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="showPage('home')"><span>⌂</span>Home</button>
+      <button class="nav-item" onclick="startRecommendation()"><span>💬</span>Assistant</button>
+      <button class="nav-item" onclick="showPage('details')"><span>▣</span>My Profile</button>
+      <button class="nav-item" onclick="showPage('emi')"><span>▦</span>Calculators</button>
+      <button class="nav-item" onclick="showPage('documents')"><span>?</span>Help</button>
+    </nav>
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
