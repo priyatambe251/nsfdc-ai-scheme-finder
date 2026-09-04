@@ -1,0 +1,17 @@
+NSFDC SCHEME RECOMMENDER
+Random Forest Classification Report
+
+Accuracy: 81.92%
+
+                    precision    recall  f1-score   support
+
+               AMY       0.49      0.46      0.48       400
+               ELS       1.00      1.00      1.00       400
+               MFS       0.49      0.53      0.51       400
+NO_ELIGIBLE_SCHEME       1.00      0.99      1.00       400
+         TERM_LOAN       1.00      0.93      0.97       400
+               UNY       0.93      1.00      0.97       400
+
+          accuracy                           0.82      2400
+         macro avg       0.82      0.82      0.82      2400
+      weighted avg       0.82      0.82      0.82      2400
