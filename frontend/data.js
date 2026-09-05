@@ -1,4 +1,4 @@
-window.NSFDC_DATA = {
+window.NITINEXUS_DATA = {
   "schemes": [
     {
       "scheme_id": "S001",

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sys
 import os
+import math
 
 # Allow imports from src folder
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -10,8 +11,10 @@ from nlp_extractor import extract_information
 import joblib
 import pandas as pd
 
+
 app = Flask(__name__)
 CORS(app)
+
 
 # ============================================================
 # LOAD TRAINED MODEL
@@ -28,6 +31,90 @@ print("Loading AI model...")
 model = joblib.load(MODEL_PATH)
 
 print("AI model loaded successfully.")
+
+
+# ============================================================
+# MODEL FEATURES
+# ============================================================
+
+MODEL_FEATURES = [
+    "sc_status",
+    "income",
+    "purpose",
+    "activity",
+    "project_cost",
+    "loan_required",
+    "education_level",
+    "course",
+    "course_type",
+    "course_recognized",
+    "location"
+]
+
+
+# ============================================================
+# SAFE VALUE FUNCTION
+# ============================================================
+
+def safe_value(value, default="NA"):
+
+    # None
+    if value is None:
+        return default
+
+    # Pandas missing values
+    try:
+        if pd.isna(value):
+            return default
+    except Exception:
+        pass
+
+    # Float NaN / Infinity
+    if isinstance(value, float):
+
+        if math.isnan(value) or math.isinf(value):
+            return default
+
+    # Empty string
+    if isinstance(value, str):
+
+        value = value.strip()
+
+        if value == "":
+            return default
+
+    return value
+
+
+# ============================================================
+# SAFE NUMERIC FUNCTION
+# ============================================================
+
+def safe_number(value, default=0):
+
+    if value is None:
+        return default
+
+    try:
+
+        if pd.isna(value):
+            return default
+
+    except Exception:
+        pass
+
+    try:
+
+        value = float(value)
+
+        if math.isnan(value) or math.isinf(value):
+            return default
+
+        return value
+
+    except (ValueError, TypeError):
+
+        return default
 
 
 # ============================================================
@@ -61,12 +148,20 @@ def recommend():
         data = request.get_json()
 
         if not data:
+
             return jsonify({
                 "status": "error",
                 "message": "No input data received"
             }), 400
 
         user_text = data.get("text", "")
+
+        if not isinstance(user_text, str):
+
+            return jsonify({
+                "status": "error",
+                "message": "Input text must be a string"
+            }), 400
 
         if not user_text.strip():
 
@@ -80,7 +175,27 @@ def recommend():
         # NLP PROCESSING
         # ----------------------------------------------------
 
+        print("\n------------------------------------------")
+        print("USER INPUT")
+        print("------------------------------------------")
+        print(user_text)
+
         extracted = extract_information(user_text)
+
+        print("\nNLP EXTRACTED DATA:")
+        print(extracted)
+
+
+        # ----------------------------------------------------
+        # LOCATION
+        # ----------------------------------------------------
+
+        location = extracted.get("location")
+
+        if location is None:
+            location = "Urban"
+
+        location = safe_value(location, "Urban")
 
 
         # ----------------------------------------------------
@@ -88,21 +203,103 @@ def recommend():
         # ----------------------------------------------------
 
         input_data = pd.DataFrame([{
-            "sc_status": extracted.get("sc_status", "NA"),
-            "income": extracted.get("income", 0),
-            "purpose": extracted.get("purpose", "NA"),
-            "activity": extracted.get("activity", "NA"),
-            "project_cost": extracted.get("project_cost", 0),
-            "loan_required": extracted.get("loan_required", 0),
-            "education_level": extracted.get("education_level", "NA"),
-            "course": extracted.get("course", "NA"),
-            "course_type": extracted.get("course_type", "NA"),
-            "course_recognized": extracted.get(
-                "course_recognized",
-                "NA"
-            ),
-            "location": extracted.get("location", "NA")
+
+            "sc_status":
+                safe_value(
+                    extracted.get("sc_status"),
+                    "Unknown"
+                ),
+
+            "income":
+                safe_number(
+                    extracted.get("income"),
+                    0
+                ),
+
+            "purpose":
+                safe_value(
+                    extracted.get("purpose"),
+                    "Unknown"
+                ),
+
+            "activity":
+                safe_value(
+                    extracted.get("activity"),
+                    "NA"
+                ),
+
+            "project_cost":
+                safe_number(
+                    extracted.get("project_cost"),
+                    0
+                ),
+
+            "loan_required":
+                safe_number(
+                    extracted.get("loan_required"),
+                    0
+                ),
+
+            "education_level":
+                safe_value(
+                    extracted.get("education_level"),
+                    "NA"
+                ),
+
+            "course":
+                safe_value(
+                    extracted.get("course"),
+                    "NA"
+                ),
+
+            "course_type":
+                safe_value(
+                    extracted.get("course_type"),
+                    "NA"
+                ),
+
+            "course_recognized":
+                safe_value(
+                    extracted.get("course_recognized"),
+                    "NA"
+                ),
+
+            "location":
+                location
+
         }])
+
+
+        # ----------------------------------------------------
+        # FORCE CORRECT COLUMN ORDER
+        # ----------------------------------------------------
+
+        input_data = input_data[MODEL_FEATURES]
+
+
+        # ----------------------------------------------------
+        # FINAL NaN CHECK
+        # ----------------------------------------------------
+
+        if input_data.isnull().any().any():
+
+            print("\nWARNING: NaN detected before prediction.")
+
+            print(input_data.isnull().sum())
+
+            # Final safety replacement
+            input_data = input_data.fillna("NA")
+
+
+        # ----------------------------------------------------
+        # DEBUG MODEL INPUT
+        # ----------------------------------------------------
+
+        print("\nMODEL INPUT:")
+        print(input_data)
+
+        print("\nMODEL INPUT DATA TYPES:")
+        print(input_data.dtypes)
 
 
         # ----------------------------------------------------
@@ -122,27 +319,39 @@ def recommend():
 
         scores = []
 
-        for scheme, probability in zip(classes, probabilities):
+        for scheme, probability in zip(
+            classes,
+            probabilities
+        ):
 
             scores.append({
-                "scheme": str(scheme),
-                "suitability_score": round(
-                    float(probability) * 100,
-                    2
-                )
+
+                "scheme":
+                    str(scheme),
+
+                "suitability_score":
+                    round(
+                        float(probability) * 100,
+                        2
+                    )
+
             })
 
 
-        # Sort highest score first
+        # ----------------------------------------------------
+        # SORT SCORES
+        # ----------------------------------------------------
+
         scores = sorted(
             scores,
-            key=lambda x: x["suitability_score"],
+            key=lambda x:
+                x["suitability_score"],
             reverse=True
         )
 
 
         # ----------------------------------------------------
-        # TOP RECOMMENDATIONS
+        # TOP 3 RECOMMENDATIONS
         # ----------------------------------------------------
 
         top_recommendations = scores[:3]
@@ -158,14 +367,17 @@ def recommend():
 
             "input": extracted,
 
-            "recommendation": str(prediction),
+            "recommendation":
+                str(prediction),
 
-            "confidence": round(
-                float(max(probabilities)) * 100,
-                2
-            ),
+            "confidence":
+                round(
+                    float(max(probabilities)) * 100,
+                    2
+                ),
 
-            "recommendations": top_recommendations,
+            "recommendations":
+                top_recommendations,
 
             "message":
                 "Recommendation generated successfully."
@@ -175,7 +387,11 @@ def recommend():
 
     except Exception as e:
 
-        print("ERROR:", str(e))
+        print("\n==========================================")
+        print("AI API ERROR")
+        print("==========================================")
+
+        print(str(e))
 
         return jsonify({
 
@@ -195,8 +411,10 @@ if __name__ == "__main__":
     print("\n==========================================")
     print("NSFDC AI RECOMMENDATION API")
     print("==========================================")
+
     print("Server running at:")
     print("http://127.0.0.1:5000")
+
     print("==========================================\n")
 
     app.run(
