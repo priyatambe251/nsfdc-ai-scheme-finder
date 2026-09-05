@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NitiNexus – AI Scheme Assistant</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- =========================
+       TOP BAR
+  ========================== -->
+
+  <header class="topbar">
+
+    <div
+      class="brand"
+      onclick="showPage('home')"
+      role="button"
+      tabindex="0"
+    >
+
+      <div class="brand-mark">
+        <span>AI</span>
+      </div>
+
+      <div class="brand-text">
+        <strong>NitiNexus</strong>
+        <span>AI Scheme Assistant</span>
+      </div>
+
+    </div>
+
+    <div class="topbar-right">
+
+      <div class="verified-top">
+        <span class="verified-dot"></span>
+        Verified Data
+      </div>
+
+      <!-- Multilingual member will connect this later -->
+      <div class="language">
+        🌐 English ▾
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main id="app">
+
+    <!-- =========================
+         HOME PAGE
+    ========================== -->
+
+    <section id="home-page" class="page active">
+
+      <div class="hero">
+
+        <div class="hero-copy">
+
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            AI-POWERED SCHEME DISCOVERY
+          </div>
+
+          <h1>
+            Find the right
+            <span>government scheme</span>
+            for you.
+          </h1>
+
+          <p class="hero-description">
+            Tell NitiNexus about your needs in simple steps.
+            Our AI analyses your requirements and identifies
+            suitable NSFDC schemes using verified government
+            scheme information.
+          </p>
+
+          <div class="hero-actions">
+
+            <button
+              class="primary-btn hero-start"
+              onclick="startRecommendation()"
+            >
+              <span>Start AI Assistant</span>
+              <strong>→</strong>
+            </button>
+
+            <button
+              class="secondary-btn hero-explore"
+              onclick="showPage('details')"
+            >
+              Explore Schemes
+            </button>
+
+          </div>
+
+          <div class="trust-row">
+
+            <div class="trust-item">
+              <span>✓</span>
+              AI-powered
+            </div>
+
+            <div class="trust-item">
+              <span>✓</span>
+              Verified scheme data
+            </div>
+
+            <div class="trust-item">
+              <span>✓</span>
+              Simple questions
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- HERO AI VISUAL -->
+
+        <div class="hero-art">
+
+          <div class="art-glow"></div>
+
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+
+          <div class="ai-card-main">
+
+            <div class="ai-card-top">
+
+              <div class="ai-icon">
+                ✦
+              </div>
+
+              <div>
+                <strong>NitiNexus AI</strong>
+                <span>Recommendation Engine</span>
+              </div>
+
+              <div class="online-status">
+                <i></i>
+                Online
+              </div>
+
+            </div>
+
+            <div class="ai-message">
+              <span class="message-icon">AI</span>
+
+              <div>
+                <strong>How can I help?</strong>
+                <p>
+                  I'll ask a few questions to
+                  understand your requirement.
+                </p>
+              </div>
+            </div>
+
+            <div class="ai-analysis">
+
+              <div class="analysis-row">
+                <span>Understanding requirement</span>
+                <b>✓</b>
+              </div>
+
+              <div class="analysis-row">
+                <span>Analysing schemes</span>
+                <b>AI</b>
+              </div>
+
+              <div class="analysis-row faded">
+                <span>Finding best match</span>
+                <b>•••</b>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="floating-mini floating-one">
+            <span>🎓</span>
+            Education
+          </div>
+
+          <div class="floating-mini floating-two">
+            <span>💼</span>
+            Business
+          </div>
+
+          <div class="floating-mini floating-three">
+            <span>✓</span>
+            Verified
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           QUICK START
+      ========================== -->
+
+      <div class="quick-section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="eyebrow">QUICK START</span>
+
+            <h2>
+              What are you looking for?
+            </h2>
+
+            <p>
+              Start with an area that matches your requirement.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+          <button
+            class="feature-card"
+            onclick="startRecommendation('Business')"
+          >
+
+            <div class="feature-icon business-icon">
+              💼
+            </div>
+
+            <div class="feature-content">
+
+              <div class="feature-title">
+                <b>Start a Business</b>
+                <span>→</span>
+              </div>
+
+              <small>
+                Find suitable finance options for
+                income-generating activities.
+              </small>
+
+            </div>
+
+          </button>
+
+
+          <button
+            class="feature-card"
+            onclick="startRecommendation('Education')"
+          >
+
+            <div class="feature-icon education-icon">
+              🎓
+            </div>
+
+            <div class="feature-content">
+
+              <div class="feature-title">
+                <b>Education</b>
+                <span>→</span>
+              </div>
+
+              <small>
+                Explore education loan assistance
+                for eligible courses.
+              </small>
+
+            </div>
+
+          </button>
+
+
+          <button
+            class="feature-card"
+            onclick="startRecommendation('Business')"
+          >
+
+            <div class="feature-icon agriculture-icon">
+              🌱
+            </div>
+
+            <div class="feature-content">
+
+              <div class="feature-title">
+                <b>Dairy / Livestock</b>
+                <span>→</span>
+              </div>
+
+              <small>
+                Explore finance options for agricultural
+                and allied activities.
+              </small>
+
+            </div>
+
+          </button>
+
+
+          <button
+            class="feature-card"
+            onclick="startRecommendation('Business')"
+          >
+
+            <div class="feature-icon existing-icon">
+              🏪
+            </div>
+
+            <div class="feature-content">
+
+              <div class="feature-title">
+                <b>Existing Business</b>
+                <span>→</span>
+              </div>
+
+              <small>
+                Share your project requirements and
+                discover suitable options.
+              </small>
+
+            </div>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           HOW IT WORKS
+      ========================== -->
+
+      <div class="how-section">
+
+        <div class="section-heading center-heading">
+
+          <span class="eyebrow">HOW NITINEXUS WORKS</span>
+
+          <h2>
+            From your requirement to a suitable scheme
+          </h2>
+
+          <p>
+            A simple AI-assisted journey designed for beneficiaries.
+          </p>
+
+        </div>
+
+
+        <div class="steps-grid">
+
+          <div class="step-card">
+
+            <div class="step-number">01</div>
+
+            <div class="step-icon">
+              💬
+            </div>
+
+            <h3>
+              Tell us your need
+            </h3>
+
+            <p>
+              Answer simple questions about your
+              purpose, income and requirement.
+            </p>
+
+          </div>
+
+
+          <div class="step-line"></div>
+
+
+          <div class="step-card">
+
+            <div class="step-number">02</div>
+
+            <div class="step-icon">
+              🧠
+            </div>
+
+            <h3>
+              AI analyses
+            </h3>
+
+            <p>
+              NLP understands your answers and the
+              ML model calculates scheme suitability.
+            </p>
+
+          </div>
+
+
+          <div class="step-line"></div>
+
+
+          <div class="step-card">
+
+            <div class="step-number">03</div>
+
+            <div class="step-icon">
+              🎯
+            </div>
+
+            <h3>
+              Get your match
+            </h3>
+
+            <p>
+              See suitable schemes, reasons,
+              eligibility information and next steps.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           TRUST / SOURCE
+      ========================== -->
+
+      <div class="home-notice">
+
+        <div class="notice-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <strong>
+            Built using verified scheme information
+          </strong>
+
+          <p>
+            NitiNexus uses verified NSFDC scheme information
+            for this SIH prototype. Final eligibility,
+            verification and sanction are subject to the
+            authorized Channel Partner and applicable guidelines.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         QUESTIONNAIRE PAGE
+    ========================== -->
+
+    <section
+      id="questionnaire-page"
+      class="page"
+    >
+
+      <div class="question-wrap">
+
+        <div class="question-head">
+
+          <button
+            class="icon-btn"
+            onclick="previousQuestion()"
+            aria-label="Previous question"
+          >
+            ←
+          </button>
+
+
+          <div class="progress-info">
+
+            <div class="progress-top">
+
+              <span id="question-count">
+                QUESTION 1
+              </span>
+
+              <span class="ai-live">
+                <i></i>
+                AI ASSISTANT
+              </span>
+
+            </div>
+
+            <div class="progress">
+              <div id="progress-bar"></div>
+            </div>
+
+          </div>
+
+
+          <button
+            class="icon-btn"
+            onclick="showPage('home')"
+            aria-label="Close questionnaire"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="chat-card">
+
+          <div class="assistant-line">
+
+            <div class="mini-avatar">
+              AI
+            </div>
+
+            <div class="assistant-info">
+
+              <b>
+                NitiNexus AI
+              </b>
+
+              <span>
+                Personalised scheme discovery
+              </span>
+
+            </div>
+
+            <div class="assistant-status">
+              <i></i>
+              Active
+            </div>
+
+          </div>
+
+
+          <div id="question-content"></div>
+
+        </div>
+
+
+        <div class="privacy-note">
+
+          <span>🔒</span>
+
+          <div>
+            Your answers are used only to prepare your
+            scheme recommendation request for this prototype.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         RECOMMENDATION PAGE
+    ========================== -->
+
+    <section
+      id="recommendation-page"
+      class="page"
+    >
+
+      <div class="content-narrow">
+
+        <div class="result-heading">
+
+          <button
+            class="icon-btn"
+            onclick="showPage('questionnaire')"
+            aria-label="Back to questionnaire"
+          >
+            ←
+          </button>
+
+          <div>
+
+            <span class="eyebrow">
+              AI ANALYSIS COMPLETE
+            </span>
+
+            <h1>
+              Your Scheme Matches
+            </h1>
+
+            <p class="heading-subtitle">
+              Based on the information you provided.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div id="recommendation-content"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         SCHEME DETAILS PAGE
+    ========================== -->
+
+    <section
+      id="details-page"
+      class="page"
+    >
+
+      <div class="content-narrow">
+
+        <div class="result-heading">
+
+          <button
+            class="icon-btn"
+            onclick="showPage('recommendation')"
+            aria-label="Back to recommendation"
+          >
+            ←
+          </button>
+
+          <div>
+
+            <span class="eyebrow">
+              VERIFIED INFORMATION
+            </span>
+
+            <h1>
+              Scheme Details
+            </h1>
+
+            <p class="heading-subtitle">
+              Understand the scheme before you apply.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div id="details-content"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         EMI PAGE
+    ========================== -->
+
+    <section
+      id="emi-page"
+      class="page"
+    >
+
+      <div class="content-narrow">
+
+        <div class="result-heading">
+
+          <button
+            class="icon-btn"
+            onclick="goBackFromUtility()"
+            aria-label="Back"
+          >
+            ←
+          </button>
+
+          <div>
+
+            <span class="eyebrow">
+              FINANCIAL PLANNING
+            </span>
+
+            <h1>
+              EMI Calculator
+            </h1>
+
+            <p class="heading-subtitle">
+              Estimate your monthly repayment.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="calculator-intro">
+
+          <div class="calculator-intro-icon">
+            ₹
+          </div>
+
+          <div>
+
+            <strong>
+              Plan your repayment
+            </strong>
+
+            <span>
+              Enter your loan details to estimate the EMI.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="calculator-card">
+
+          <label>
+            Loan Amount (₹)
+
+            <input
+              id="emi-amount"
+              type="number"
+              min="0"
+              step="1000"
+              placeholder="Example: 500000"
+            >
+          </label>
+
+
+          <label>
+            Interest Rate (% p.a.)
+
+            <input
+              id="emi-rate"
+              type="number"
+              min="0"
+              step="0.1"
+              placeholder="Example: 8"
+            >
+          </label>
+
+
+          <label>
+            Loan Tenure (years)
+
+            <input
+              id="emi-years"
+              type="number"
+              min="1"
+              max="20"
+              step="1"
+              value="3"
+            >
+          </label>
+
+
+          <button
+            class="primary-btn"
+            onclick="calculateEMI()"
+          >
+            Calculate EMI
+            <span>→</span>
+          </button>
+
+        </div>
+
+
+        <div
+          id="emi-result"
+          class="metric-grid"
+        ></div>
+
+
+        <p class="disclaimer">
+          * EMI calculation is approximate. Actual sanction amount,
+          interest rate and repayment terms are subject to the
+          applicable scheme and authorized Channel Partner.
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CHANNEL PARTNERS PAGE
+    ========================== -->
+
+    <section
+      id="partners-page"
+      class="page"
+    >
+
+      <div class="content-narrow">
+
+        <div class="result-heading">
+
+          <button
+            class="icon-btn"
+            onclick="goBackFromUtility()"
+            aria-label="Back"
+          >
+            ←
+          </button>
+
+          <div>
+
+            <span class="eyebrow">
+              APPLICATION SUPPORT
+            </span>
+
+            <h1>
+              Channel Partners
+            </h1>
+
+            <p class="heading-subtitle">
+              Find an authorized channel partner for assistance.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="partner-intro">
+
+          <div class="partner-intro-icon">
+            📍
+          </div>
+
+          <div>
+
+            <strong>
+              Find support near you
+            </strong>
+
+            <span>
+              Explore listed authorized channel partners
+              and their available contact/location information.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div id="partners-content"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         DOCUMENTS PAGE
+    ========================== -->
+
+    <section
+      id="documents-page"
+      class="page"
+    >
+
+      <div class="content-narrow">
+
+        <div class="result-heading">
+
+          <button
+            class="icon-btn"
+            onclick="goBackFromUtility()"
+            aria-label="Back"
+          >
+            ←
+          </button>
+
+          <div>
+
+            <span class="eyebrow">
+              APPLICATION SUPPORT
+            </span>
+
+            <h1>
+              Documents & Application
+            </h1>
+
+            <p class="heading-subtitle">
+              Know what you may need before approaching the
+              authorized channel partner.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="documents-header-card">
+
+          <div class="documents-icon">
+            📄
+          </div>
+
+          <div>
+
+            <strong>
+              Prepare before you apply
+            </strong>
+
+            <span>
+              Review the required documents and application
+              guidance for your selected scheme.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div id="documents-content"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =========================
+       BOTTOM NAVIGATION
+  ========================== -->
+
+  <nav class="bottom-nav">
+
+    <button
+      class="nav-item active"
+      onclick="showPage('home')"
+    >
+      <span>⌂</span>
+      <small>Home</small>
+    </button>
+
+
+    <button
+      class="nav-item"
+      onclick="startRecommendation()"
+    >
+      <span>✦</span>
+      <small>AI Assistant</small>
+    </button>
+
+
+    <button
+      class="nav-item"
+      onclick="showPage('details')"
+    >
+      <span>▣</span>
+      <small>Schemes</small>
+    </button>
+
+
+    <button
+      class="nav-item"
+      onclick="showPage('emi')"
+    >
+      <span>₹</span>
+      <small>Calculator</small>
+    </button>
+
+
+    <button
+      class="nav-item"
+      onclick="showPage('documents')"
+    >
+      <span>?</span>
+      <small>Help</small>
+    </button>
+
+  </nav>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="prototype-footer">
+
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo">AI</div>
+
+        <div>
+          <strong>NitiNexus</strong>
+          <span>AI Scheme Assistant</span>
+        </div>
+      </div>
+
+      <small>
+        SIH Prototype • Scheme information based on verified
+        government sources.
+      </small>
+
+    </div>
+
+  </footer>
+
+</div>
+
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
